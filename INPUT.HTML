@@ -1,49 +1,65 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Form Rekapan Pasien</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>REKAPITULASI PASIEN RUANG GELATIK</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f7fa;
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
       margin: 0;
       padding: 2rem;
-      color: #1f2937;
+      color: #333333;
     }
 
     h2 {
       text-align: center;
-      color: #2563eb;
+      color: #333333;
       margin-bottom: 2rem;
+      font-weight: 600;
     }
 
     form {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      background: #fff;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      background: #ffffff;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      max-width: 1300px;
+      max-width: 1200px;
       margin: auto;
+    }
+
+    form > div, .full {
+      background: transparent;
+      padding: 0;
+      border: none;
+      box-shadow: none;
     }
 
     label {
       display: block;
       margin-bottom: 6px;
       font-weight: 600;
+      color: #333333;
     }
 
     input, select, textarea {
       width: 100%;
       padding: 10px;
-      border: 1px solid #d1d5db;
+      background: #ffffff;
+      border: 1px solid #cccccc;
       border-radius: 8px;
       font-size: 14px;
+      color: #333333;
       box-sizing: border-box;
+    }
+
+    input[readonly] {
+      background-color: #f0f0f0;
     }
 
     textarea {
@@ -51,86 +67,87 @@
       min-height: 60px;
     }
 
-    input[readonly] {
-      background-color: #f3f4f6;
-    }
-
     .full {
-      grid-column: span 4;
-    }
-
-    .half {
-      grid-column: span 2;
+      grid-column: span 3;
     }
 
     button {
-      grid-column: span 4;
+      grid-column: span 3;
       padding: 12px;
       font-size: 16px;
-      background: #2563eb;
+      background: #3b82f6;
       color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       font-weight: bold;
+      transition: background 0.2s ease;
     }
 
-    .success, .error {
-      grid-column: span 4;
-      text-align: center;
-      margin-top: 10px;
+    button:hover {
+      background: #2563eb;
     }
-
-    .success { color: green; }
-    .error { color: red; }
 
     .dpjp-wrapper {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      border: 1px solid #d1d5db;
+      border: 1px solid #cccccc;
       border-radius: 8px;
       padding: 8px;
-      background: #fff;
+      background: #ffffff;
     }
 
     .dpjp-tag {
-      background: #2563eb;
-      color: white;
+      background: #ffffff;
+      color: #333333;
       padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 13px;
-      display: flex;
+      border-radius: 12px;
+      border: 1px solid #3b82f6;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      display: inline-flex;
       align-items: center;
+      margin: 4px;
     }
 
     .dpjp-tag button {
       background: none;
       border: none;
-      color: white;
+      color: #3b82f6;
+      font-size: 16px;
       margin-left: 6px;
       cursor: pointer;
+      line-height: 1;
     }
 
     .dpjp-wrapper input {
+      background: transparent;
       border: none;
+      color: #333333;
       flex: 1;
       font-size: 14px;
-      min-width: 150px;
+      min-width: 250px;
       outline: none;
     }
 
     .dpjp-suggestions {
       position: absolute;
-      background: white;
-      border: 1px solid #ccc;
+      background: #ffffff;
+      border: 1px solid #cccccc;
       list-style: none;
       margin: 0;
       padding: 0;
       z-index: 999;
-      width: 100%;
+      width: calc(100% - 32px);
       max-height: 200px;
       overflow-y: auto;
+      color: #333333;
+    }
+
+    .dpjp-suggestions:empty {
+      display: none;
+      border: none;
     }
 
     .dpjp-suggestions li {
@@ -154,100 +171,73 @@
   </style>
 </head>
 <body>
-
-<h2>Form Rekapan Pasien</h2>
-
+<h2>REKAPITULASI PASIEN RUANG GELATIK</h2>
 <form id="rekapForm">
-  <div><label>No. RM</label><input name="no_rm" required></div>
-  <div><label>Nama Pasien</label><input name="nama_pasien" required></div>
-  <div><label>Tanggal Lahir</label><input type="date" id="tgl_lahir" name="tgl_lahir" required></div>
-  <div><label>Umur</label><input type="number" name="umur" id="umur" readonly></div>
-
-  <div><label>Alamat</label><textarea name="alamat" required></textarea></div>
-  <div><label>Jenis Kelamin</label>
-    <select name="jenis_kelamin" required>
-      <option value="">-- Pilih --</option>
-      <option>Laki-laki</option>
-      <option>Perempuan</option>
-    </select>
-  </div>
-  <div><label>Tanggal MRS</label><input type="date" name="tgl_mrs" id="tgl_mrs" required></div>
-  <div><label>Tanggal KRS</label><input type="date" name="tgl_krs" id="tgl_krs" required></div>
-
-  <div><label>Lama Perawatan</label><input type="number" name="lama_perawatan" id="lama_perawatan" readonly></div>
-  <div><label>Diagnosa</label><input name="diagnosa" required></div>
-  <div><label>Penjamin</label>
-    <select name="penjamin" required>
-      <option value="">-- Pilih --</option>
-      <option>BPJS Kelas 1</option>
-      <option>BPJS Kelas 2</option>
-      <option>BPJS Kelas 3/PBI</option>
-      <option>PBID</option>
-      <option>Umum</option>
-      <option>Global Fund</option>
-      <option>Jasa Raharja</option>
-    </select>
-  </div>
-  <div><label>Keterangan</label>
-    <select name="keterangan">
-      <option value="">-- Pilih --</option>
-      <option>Membaik</option>
-      <option>Meninggal</option>
-      <option>APS</option>
-      <option>Rujuk</option>
-      <option>Pindah Ruang</option>
-    </select>
-  </div>
-
-  <div class="full">
-    <label>DPJP</label>
-    <div class="dpjp-wrapper" id="dpjpWrapper">
-      <div id="dpjpTags"></div>
-      <input type="text" id="dpjpInput" placeholder="Ketik nama dokter...">
-      <input type="hidden" name="dpjp" id="dpjpHidden">
-    </div>
-    <ul class="dpjp-suggestions" id="dpjpSuggestions"></ul>
-  </div>
-
-  <button type="submit">Kirim Data</button>
-  <div class="success" id="successMsg"></div>
-  <div class="error" id="errorMsg"></div>
-</form>
-
+<div><label>No. RM</label><input name="no_rm" required=""/></div>
+<div><label>Nama Pasien</label><input name="nama_pasien" required=""/></div>
+<div><label>Tanggal Lahir</label><input id="tgl_lahir" name="tgl_lahir" required="" type="date"/></div>
+<div><label>Umur</label><input id="umur" name="umur" readonly="" type="number"/></div>
+<div><label>Alamat</label><textarea name="alamat" required=""></textarea></div>
+<div><label>Jenis Kelamin</label>
+<select name="jenis_kelamin" required="">
+<option value="">-- Pilih --</option>
+<option>Laki-laki</option>
+<option>Perempuan</option>
+</select>
+</div>
+<div><label>Tanggal MRS</label><input id="tgl_mrs" name="tgl_mrs" required="" type="date"/></div>
+<div><label>Tanggal KRS</label><input id="tgl_krs" name="tgl_krs" required="" type="date"/></div>
+<div><label>Lama Perawatan</label><input id="lama_perawatan" name="lama_perawatan" readonly="" type="number"/></div>
+<div><label>Diagnosa</label><input name="diagnosa" required=""/></div>
+<div><label>Penjamin</label>
+<select name="penjamin" required="">
+<option value="">-- Pilih --</option>
+<option>BPJS Kelas 1</option>
+<option>BPJS Kelas 2</option>
+<option>BPJS Kelas 3/PBI</option>
+<option>PBID</option>
+<option>Umum</option>
+<option>Global Fund</option>
+<option>Jasa Raharja</option>
+</select>
+</div>
+<div><label>Keterangan</label>
+<select name="keterangan">
+<option value="">-- Pilih --</option>
+<option>Membaik</option>
+<option>Meninggal</option>
+<option>APS</option>
+<option>Rujuk</option>
+<option>Pindah Ruang</option>
+</select>
+</div>
+<div class="full">
+<label>DPJP</label>
+<div class="dpjp-wrapper" id="dpjpWrapper">
+<div id="dpjpTags"></div>
+<input id="dpjpInput" placeholder="Ketik nama dokter..." type="text"/>
+<input id="dpjpHidden" name="dpjp" type="hidden"/>
+</div>
+<ul class="dpjp-suggestions" id="dpjpSuggestions"></ul>
+</div>
+<button type="submit">Kirim Data</button>
+</form><div class="full">
+<input id="namaSheetBaru" placeholder="Nama Sheet Baru" type="text"/>
+<button onclick="addSheet()" type="button">Tambah Sheet Baru ke Google Sheets</button>
+</div>
 <script>
-  const tglLahirInput = document.getElementById('tgl_lahir');
   const umurInput = document.getElementById('umur');
+  const tglLahirInput = document.getElementById('tgl_lahir');
   const tglMRSInput = document.getElementById('tgl_mrs');
   const tglKRSInput = document.getElementById('tgl_krs');
   const lamaInput = document.getElementById('lama_perawatan');
   const form = document.getElementById('rekapForm');
-  const successMsg = document.getElementById('successMsg');
-  const errorMsg = document.getElementById('errorMsg');
+  const dpjpInput = document.getElementById('dpjpInput');
+  const dpjpSuggestions = document.getElementById('dpjpSuggestions');
+  const dpjpTags = document.getElementById('dpjpTags');
+  const dpjpHidden = document.getElementById('dpjpHidden');
   const scriptURL = 'https://script.google.com/macros/s/AKfycbySocqZA4R9k28Wo3FiXEIcXtyL9LZbOn3WwH-UjZqhFJBz8HktOu9LKw--Zp3MbiyjYA/exec';
 
-  // Umur otomatis
-  tglLahirInput.addEventListener('change', () => {
-    const birth = new Date(tglLahirInput.value);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
-    umurInput.value = age >= 0 ? age : '';
-  });
-
-  // Lama perawatan otomatis
-  function hitungLama() {
-    const mrs = new Date(tglMRSInput.value);
-    const krs = new Date(tglKRSInput.value);
-    if (!isNaN(mrs) && !isNaN(krs)) {
-      const diff = (krs - mrs) / (1000 * 60 * 60 * 24);
-      lamaInput.value = diff >= 0 ? diff : '';
-    }
-  }
-  tglMRSInput.addEventListener('change', hitungLama);
-  tglKRSInput.addEventListener('change', hitungLama);
-
-  // DPJP
   const dpjpList = [
     "dr. CAESAR ENSANG TIMUDA, Sp.P", "dr. AGUNG SANDI RAMADAN, Sp.PD", "dr. FEBRIAN DARU SETIAWAN, Sp.PD",
     "dr. HARNOWO WILUJENG, Sp.PD-FINASIM", "dr. MOHAMMAD AFIES SJUGHIARTO, Sp.Jp, MMRS",
@@ -259,11 +249,28 @@
     "dr. HEDINA SUWONDO, Sp.KJ"
   ];
 
-  const dpjpInput = document.getElementById("dpjpInput");
-  const dpjpSuggestions = document.getElementById("dpjpSuggestions");
-  const dpjpTags = document.getElementById("dpjpTags");
-  const dpjpHidden = document.getElementById("dpjpHidden");
   let selectedDPJP = [];
+
+  tglLahirInput.addEventListener('change', () => {
+    const birth = new Date(tglLahirInput.value);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    umurInput.value = age >= 0 ? age : '';
+  });
+
+  function hitungLama() {
+    const mrs = new Date(tglMRSInput.value);
+    const krs = new Date(tglKRSInput.value);
+    if (!isNaN(mrs) && !isNaN(krs)) {
+      const diff = (krs - mrs) / (1000 * 60 * 60 * 24);
+      lamaInput.value = diff >= 0 ? diff : '';
+    }
+  }
+
+  tglMRSInput.addEventListener('change', hitungLama);
+  tglKRSInput.addEventListener('change', hitungLama);
 
   dpjpInput.addEventListener("input", () => {
     const val = dpjpInput.value.toLowerCase();
@@ -287,14 +294,14 @@
     selectedDPJP.forEach(name => {
       const tag = document.createElement("span");
       tag.className = "dpjp-tag";
-      tag.innerHTML = `${name} <button>&times;</button>`;
+      tag.innerHTML = `${name}<button>&times;</button>`;
       tag.querySelector("button").onclick = () => {
         selectedDPJP = selectedDPJP.filter(d => d !== name);
         updateDPJP();
       };
       dpjpTags.appendChild(tag);
     });
-    dpjpHidden.value = selectedDPJP.join(", ");
+    dpjpHidden.value = selectedDPJP.join(" + ");
   }
 
   document.addEventListener("click", (e) => {
@@ -303,13 +310,11 @@
     }
   });
 
-  // Submit ke Google Sheets
   form.addEventListener('submit', e => {
     e.preventDefault();
     fetch(scriptURL, { method: 'POST', body: new FormData(form) })
       .then(() => {
-        successMsg.textContent = '✅ Data berhasil dikirim!';
-        errorMsg.textContent = '';
+        alert('✅ Data berhasil dikirim!');
         form.reset();
         selectedDPJP = [];
         dpjpTags.innerHTML = '';
@@ -318,11 +323,67 @@
         lamaInput.value = '';
       })
       .catch(() => {
-        successMsg.textContent = '';
-        errorMsg.textContent = '❌ Gagal mengirim data.';
+        alert('❌ Gagal mengirim data.');
       });
   });
 </script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+  const CLIENT_ID = '102861957108-gk20h4p29q6s2ep12mlik5d01geaj90k.apps.googleusercontent.com';
+  const API_KEY = 'AIzaSyBLWA4VpHOTbO_vwANMgZMbiuOq7yLmzNs';
+  const SPREADSHEET_ID = '1MbS_vO7Q2kPbN4z4eoJcTy7jfgAQFrnnEG29TB0UvpQ';
+  const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
+  function gapiLoaded() {
+    gapi.load('client:auth2', initGapiClient);
+  }
+
+  async function initGapiClient() {
+    await gapi.client.init({
+      apiKey: API_KEY,
+      clientId: CLIENT_ID,
+      discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+      scope: SCOPES
+    });
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+      await gapi.auth2.getAuthInstance().signIn();
+    }
+  }
+
+  async function addSheet() {
+    // Log email pengguna yang sedang login
+    const user = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+    console.log("Login sebagai:", user.getEmail());
+
+    const sheetName = document.getElementById('namaSheetBaru').value.trim();
+    if (!sheetName) {
+      alert("❗ Masukkan nama sheet terlebih dahulu.");
+      return;
+    }
+
+    const request = {
+      spreadsheetId: SPREADSHEET_ID,
+      resource: {
+        requests: [{
+          addSheet: {
+            properties: { title: sheetName }
+          }
+        }]
+      }
+    };
+
+    try {
+      await gapi.client.sheets.spreadsheets.batchUpdate(request);
+      alert(`✅ Sheet "${sheetName}" berhasil ditambahkan.`);
+    } catch (err) {
+    console.error("❌ Gagal menambahkan sheet:", err);
+    alert("❌ Gagal menambahkan sheet: " + (err.result?.error?.message || err.message));
+      console.error(err);
+      alert("❌ Gagal menambahkan sheet.");
+    }
+  }
+
+  window.onload = gapiLoaded;
+</script>
 </body>
 </html>
