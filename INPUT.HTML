@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Rekapan Pasien</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 2rem;
+      color: #1f2937;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2563eb;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    input[readonly] {
+      background-color: #f3f4f6;
+    }
+
+    .full {
+      grid-column: span 4;
+    }
+
+    .half {
+      grid-column: span 2;
+    }
+
+    button {
+      grid-column: span 4;
+      padding: 12px;
+      font-size: 16px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .success, .error {
+      grid-column: span 4;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .success { color: green; }
+    .error { color: red; }
+
+    .dpjp-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 8px;
+      background: #fff;
+    }
+
+    .dpjp-tag {
+      background: #2563eb;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+    }
+
+    .dpjp-tag button {
+      background: none;
+      border: none;
+      color: white;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+
+    .dpjp-wrapper input {
+      border: none;
+      flex: 1;
+      font-size: 14px;
+      min-width: 150px;
+      outline: none;
+    }
+
+    .dpjp-suggestions {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      z-index: 999;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .dpjp-suggestions li {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .dpjp-suggestions li:hover {
+      background-color: #f3f4f6;
+    }
+
+    @media (max-width: 1024px) {
+      form { grid-template-columns: repeat(2, 1fr); }
+      .full { grid-column: span 2; }
+    }
+
+    @media (max-width: 600px) {
+      form { grid-template-columns: 1fr; }
+      .full { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<h2>Form Rekapan Pasien</h2>
+
+<form id="rekapForm">
+  <div><label>No. RM</label><input name="no_rm" required></div>
+  <div><label>Nama Pasien</label><input name="nama_pasien" required></div>
+  <div><label>Tanggal Lahir</label><input type="date" id="tgl_lahir" name="tgl_lahir" required></div>
+  <div><label>Umur</label><input type="number" name="umur" id="umur" readonly></div>
+
+  <div><label>Alamat</label><textarea name="alamat" required></textarea></div>
+  <div><label>Jenis Kelamin</label>
+    <select name="jenis_kelamin" required>
+      <option value="">-- Pilih --</option>
+      <option>Laki-laki</option>
+      <option>Perempuan</option>
+    </select>
+  </div>
+  <div><label>Tanggal MRS</label><input type="date" name="tgl_mrs" id="tgl_mrs" required></div>
+  <div><label>Tanggal KRS</label><input type="date" name="tgl_krs" id="tgl_krs" required></div>
+
+  <div><label>Lama Perawatan</label><input type="number" name="lama_perawatan" id="lama_perawatan" readonly></div>
+  <div><label>Diagnosa</label><input name="diagnosa" required></div>
+  <div><label>Penjamin</label>
+    <select name="penjamin" required>
+      <option value="">-- Pilih --</option>
+      <option>BPJS Kelas 1</option>
+      <option>BPJS Kelas 2</option>
+      <option>BPJS Kelas 3/PBI</option>
+      <option>PBID</option>
+      <option>Umum</option>
+      <option>Global Fund</option>
+      <option>Jasa Raharja</option>
+    </select>
+  </div>
+  <div><label>Keterangan</label>
+    <select name="keterangan">
+      <option value="">-- Pilih --</option>
+      <option>Membaik</option>
+      <option>Meninggal</option>
+      <option>APS</option>
+      <option>Rujuk</option>
+      <option>Pindah Ruang</option>
+    </select>
+  </div>
+
+  <div class="full">
+    <label>DPJP</label>
+    <div class="dpjp-wrapper" id="dpjpWrapper">
+      <div id="dpjpTags"></div>
+      <input type="text" id="dpjpInput" placeholder="Ketik nama dokter...">
+      <input type="hidden" name="dpjp" id="dpjpHidden">
+    </div>
+    <ul class="dpjp-suggestions" id="dpjpSuggestions"></ul>
+  </div>
+
+  <button type="submit">Kirim Data</button>
+  <div class="success" id="successMsg"></div>
+  <div class="error" id="errorMsg"></div>
+</form>
+
+<script>
+  const tglLahirInput = document.getElementById('tgl_lahir');
+  const umurInput = document.getElementById('umur');
+  const tglMRSInput = document.getElementById('tgl_mrs');
+  const tglKRSInput = document.getElementById('tgl_krs');
+  const lamaInput = document.getElementById('lama_perawatan');
+  const form = document.getElementById('rekapForm');
+  const successMsg = document.getElementById('successMsg');
+  const errorMsg = document.getElementById('errorMsg');
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbySocqZA4R9k28Wo3FiXEIcXtyL9LZbOn3WwH-UjZqhFJBz8HktOu9LKw--Zp3MbiyjYA/exec';
+
+  // Umur otomatis
+  tglLahirInput.addEventListener('change', () => {
+    const birth = new Date(tglLahirInput.value);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    umurInput.value = age >= 0 ? age : '';
+  });
+
+  // Lama perawatan otomatis
+  function hitungLama() {
+    const mrs = new Date(tglMRSInput.value);
+    const krs = new Date(tglKRSInput.value);
+    if (!isNaN(mrs) && !isNaN(krs)) {
+      const diff = (krs - mrs) / (1000 * 60 * 60 * 24);
+      lamaInput.value = diff >= 0 ? diff : '';
+    }
+  }
+  tglMRSInput.addEventListener('change', hitungLama);
+  tglKRSInput.addEventListener('change', hitungLama);
+
+  // DPJP
+  const dpjpList = [
+    "dr. CAESAR ENSANG TIMUDA, Sp.P", "dr. AGUNG SANDI RAMADAN, Sp.PD", "dr. FEBRIAN DARU SETIAWAN, Sp.PD",
+    "dr. HARNOWO WILUJENG, Sp.PD-FINASIM", "dr. MOHAMMAD AFIES SJUGHIARTO, Sp.Jp, MMRS",
+    "dr. LAURENTIA DIVINA RESPATI, Sp.S", "dr. ANITA SURYA SANTOSO, Sp.JP", "dr. RIDZA ASRUL PRAMUDYA, Sp.N",
+    "dr. NORMAN HADI, Sp.B.", "dr. ANGGAYASTI, Sp.A., M.Kes", "dr. CHRISTOPHER ANTONY SIMANDJUNTAK, Sp.OT",
+    "dr. RIZQI WAHYU HARIYONO, Sp.M", "dr. ARI SARDITO, Sp.B", "dr. FARAH AYU NISWANA, Sp.THT-KL",
+    "dr. RAHMAD KRISMANTORO, Sp.U", "dr. BAYU PRABOWO, Sp. A.", "dr. EKO WAHYUDI, Sp. A",
+    "dr. EMY KUSUMANINGSIH, Sp. DV", "dr. FERRIE BUDIANTO, Sp. An", "dr. WINDY ARI WIJAYA, Sp.An",
+    "dr. HEDINA SUWONDO, Sp.KJ"
+  ];
+
+  const dpjpInput = document.getElementById("dpjpInput");
+  const dpjpSuggestions = document.getElementById("dpjpSuggestions");
+  const dpjpTags = document.getElementById("dpjpTags");
+  const dpjpHidden = document.getElementById("dpjpHidden");
+  let selectedDPJP = [];
+
+  dpjpInput.addEventListener("input", () => {
+    const val = dpjpInput.value.toLowerCase();
+    dpjpSuggestions.innerHTML = "";
+    const matches = dpjpList.filter(name => name.toLowerCase().includes(val) && !selectedDPJP.includes(name));
+    matches.forEach(name => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      li.onclick = () => {
+        selectedDPJP.push(name);
+        updateDPJP();
+        dpjpInput.value = "";
+        dpjpSuggestions.innerHTML = "";
+      };
+      dpjpSuggestions.appendChild(li);
+    });
+  });
+
+  function updateDPJP() {
+    dpjpTags.innerHTML = "";
+    selectedDPJP.forEach(name => {
+      const tag = document.createElement("span");
+      tag.className = "dpjp-tag";
+      tag.innerHTML = `${name} <button>&times;</button>`;
+      tag.querySelector("button").onclick = () => {
+        selectedDPJP = selectedDPJP.filter(d => d !== name);
+        updateDPJP();
+      };
+      dpjpTags.appendChild(tag);
+    });
+    dpjpHidden.value = selectedDPJP.join(", ");
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!dpjpInput.contains(e.target) && !dpjpSuggestions.contains(e.target)) {
+      dpjpSuggestions.innerHTML = "";
+    }
+  });
+
+  // Submit ke Google Sheets
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+      .then(() => {
+        successMsg.textContent = '✅ Data berhasil dikirim!';
+        errorMsg.textContent = '';
+        form.reset();
+        selectedDPJP = [];
+        dpjpTags.innerHTML = '';
+        dpjpHidden.value = '';
+        umurInput.value = '';
+        lamaInput.value = '';
+      })
+      .catch(() => {
+        successMsg.textContent = '';
+        errorMsg.textContent = '❌ Gagal mengirim data.';
+      });
+  });
+</script>
+
+</body>
+</html>
